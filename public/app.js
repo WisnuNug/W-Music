@@ -1317,10 +1317,10 @@ function openSongNowPlaying(song) {
 
 /* ================= router / views ================= */
 const NAV = [
-  { id: 'home', label: 'Home', icon: 'i-home-o', iconActive: 'i-home', hash: '#/home' },
-  { id: 'search', label: 'Search', icon: 'i-search', iconActive: 'i-search', hash: '#/search' },
-  { id: 'charts', label: 'Charts', icon: 'i-chart', iconActive: 'i-chart', hash: '#/charts' },
-  { id: 'library', label: 'Your Library', icon: 'i-library', iconActive: 'i-library', hash: '#/library' },
+  { id: 'home', label: 'Beranda', icon: 'i-home-o', iconActive: 'i-home', hash: '#/home' },
+  { id: 'search', label: 'Pencarian', icon: 'i-search', iconActive: 'i-search', hash: '#/search' },
+  { id: 'charts', label: 'Tangga Lagu', icon: 'i-chart', iconActive: 'i-chart', hash: '#/charts' },
+  { id: 'library', label: 'Pustaka Anda', icon: 'i-library', iconActive: 'i-library', hash: '#/library' },
 ];
 function renderNav() {
   const html = NAV.map((n) => `<button class="nav-item" data-id="${n.id}" data-ic="${n.icon}" data-ica="${n.iconActive}" onclick="location.hash='${n.hash}'"><svg class="ic"><use href="#${n.icon}"/></svg><span>${n.label}</span></button>`).join('');
@@ -1396,11 +1396,11 @@ async function route() {
     else if (parts[0] === 'localpl') { setActiveNav('library'); viewLocalPlaylist(view, parts[1]); }
     else if (parts[0] === 'song' && parts[1]) { setActiveNav('home'); await viewHome(view); openSharedSong(parts[1]); }
     else {
-      view.innerHTML = emptyHTML('Page not found', 'That link does not exist or the page was removed.', { label: 'Go home', go: '#/home', ic: 'i-search' });
+      view.innerHTML = emptyHTML('Page not found', 'That link does not exist or the page was removed.', { label: 'Ke Beranda', go: '#/home', ic: 'i-search' });
       bindEmptyCtas(view);
     }
   } catch (e) {
-    view.innerHTML = emptyHTML('Failed to load', esc(e.message || 'Something went wrong.'), { label: 'Retry', act: 'reload', ic: 'i-note' });
+    view.innerHTML = emptyHTML('Failed to load', esc(e.message || 'Something went wrong.'), { label: 'Ulang', act: 'reload', ic: 'i-note' });
     bindEmptyCtas(view);
   }
   view.classList.add('view-enter');
@@ -1657,7 +1657,7 @@ async function viewSearch(view, q = '', filter = null) {
       }
     } catch {
       const grid = $('#browse-grid');
-      if (grid) grid.innerHTML = emptyHTML('Could not load moods', 'Check your connection and try again.', { label: 'Retry', go: '#/search', ic: 'i-search' });
+      if (grid) grid.innerHTML = emptyHTML('Could not load moods', 'Check your connection and try again.', { label: 'Coba Lagi', go: '#/search', ic: 'i-search' });
     }
     return;
   }
