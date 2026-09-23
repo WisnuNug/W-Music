@@ -806,7 +806,7 @@ function renderSideQueue() {
   Player.queue.forEach((q, i) => { if (i > Player.index) upcoming.push({ q, i }); });
   const user = upcoming.filter((x) => x.q._user);
   const now = Player.current;
-  let html = `<div class="sq-sec">Now playing</div>
+  let html = `<div class="sq-sec">Sedang Diputar</div>
     <button type="button" class="sq-row now" data-qi="${Player.index}">
       ${coverHTML(now.thumbnail, 'sq')}
       <span class="sq-meta"><span class="sq-t">${esc(now.title)}</span><br><span class="sq-s">${esc(now.artist || now.subtitle || '')}</span></span>
@@ -1006,7 +1006,7 @@ async function loadRelated(force = false) {
       .slice(0, 25)
       .map((q) => ({ type: 'song', videoId: q.videoId, title: q.title, subtitle: q.artist, thumbnail: q.thumbnail, duration: q.duration, artists: q.artists }));
     if (items.length) {
-      paint(shelfHTML({ title: 'Similar songs', items, list: true }));
+      paint(shelfHTML({ title: 'Lagu serupa', items, list: true }));
       return;
     }
   } catch {}
@@ -1144,11 +1144,11 @@ function trackRowHTML(it, playing = false, extraBtn = '') {
     ${coverHTML(it.thumbnail, 'track')}
     <div class="tmeta"><div class="tt">${esc(displayTitle(it.title))}</div><div class="ts">${esc(it.artist || it.subtitle || '')}</div></div>
     ${it.duration ? `<span class="tdur">${esc(it.duration)}</span>` : ''}
-    <button class="tbtn btn-fav" title="Favorite">${icon(Library.isFav(it.videoId) ? 'i-heart-f' : 'i-heart-o')}</button>
-    <button class="tbtn btn-queue" title="Add to queue">${icon('i-queue')}</button>
-    <button class="tbtn btn-addpl" title="Add to playlist">${icon('i-plus')}</button>
-    <button class="tbtn btn-dl" title="Download">${icon('i-download')}</button>
-    <button class="tbtn btn-more" title="More">${icon('i-more')}</button>
+    <button class="tbtn btn-fav" title="Favorit">${icon(Library.isFav(it.videoId) ? 'i-heart-f' : 'i-heart-o')}</button>
+    <button class="tbtn btn-queue" title="Tambah ke antrian">${icon('i-queue')}</button>
+    <button class="tbtn btn-addpl" title="Tambah ke daftar putar">${icon('i-plus')}</button>
+    <button class="tbtn btn-dl" title="Unduh">${icon('i-download')}</button>
+    <button class="tbtn btn-more" title="Lagi">${icon('i-more')}</button>
     ${extraBtn}
   </div>`;
 }
@@ -1361,7 +1361,7 @@ function renderSidebarLibrary() {
       ${coverHTML(it.thumbnail, 'lib')}
       <span class="lr-meta"><span class="lr-t">${esc(it.title)}</span><br><span class="lr-s">${it.type === 'artist' ? 'Artist' : it.type === 'album' ? 'Album' : 'Playlist'}</span></span>
     </button>`).join('');
-  if (!html) html = `<div class="lib-empty"><b>Your library is empty</b><br>Like songs, save albums & artists, or open Library to create a playlist</div>`;
+  if (!html) html = `<div class="lib-empty"><b>Pustaka Anda kosong</b><br>Sukai lagu, simpan album & artis, atau buka Pustaka untuk membuat playlist.</div>`;
   el.innerHTML = html;
   $$('[data-nav]', el).forEach((b) => b.addEventListener('click', () => go(b.dataset.nav)));
   $$('[data-item]', el).forEach((b) => b.addEventListener('click', () => {
@@ -1639,7 +1639,7 @@ async function viewSearch(view, q = '', filter = null) {
   const hist = !q ? Library.history.slice(0, 6) : [];
   view.innerHTML = `
     ${q ? '' : '<div class="page-title">Search</div>'}
-    <div class="search-bar${q ? ' has-q' : ''}">${icon('i-search', 'ic search-ic')}<input id="search-input" placeholder="What do you want to play?" value="${esc(q)}" autocomplete="off" spellcheck="false"><button type="button" class="search-clear" id="search-clear" title="Clear">${icon('i-x')}</button></div>
+    <div class="search-bar${q ? ' has-q' : ''}">${icon('i-search', 'ic search-ic')}<input id="search-input" placeholder="Kamu ingin memainkan musik apa?" value="${esc(q)}" autocomplete="off" spellcheck="false"><button type="button" class="search-clear" id="search-clear" title="Clear">${icon('i-x')}</button></div>
     <div class="suggest" id="suggest"></div>
     ${q ? `<div class="search-chips">${filters.map((f) => `<button type="button" class="chip ${((filter || 'all') === f) ? 'active' : ''}" data-f="${f}">${f[0].toUpperCase() + f.slice(1)}</button>`).join('')}</div>` : recentSearchHTML()}
     <div id="search-results">${q
@@ -1942,7 +1942,7 @@ function restoreLibrary() {
 function viewLocalPlaylist(view, pid) {
   const pl = Library.playlists.find((p) => p.id === pid);
   if (!pl) {
-    view.innerHTML = emptyHTML('Playlist not found', 'It may have been deleted.', { label: 'Your Library', go: '#/library', ic: 'i-library' });
+    view.innerHTML = emptyHTML('Playlist not found', 'It may have been deleted.', { label: 'Pustaka Anda', go: '#/library', ic: 'i-library' });
     bindEmptyCtas(view);
     return;
   }
