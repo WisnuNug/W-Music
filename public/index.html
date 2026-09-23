@@ -94,7 +94,7 @@ try {
       </div>
       <div id="lib-list"></div>
       <div class="sidebar-footer">
-    W-Music · free app music player
+    W-Music · Pemutar musik gratis
     <br>
     <span class="credit">@WisnuNug</span>
 </div>
@@ -110,7 +110,7 @@ try {
       </div>
       <button type="button" id="tb-search" class="tb-search" title="Search">
         <svg class="ic"><use href="#i-search"/></svg>
-        <span>What do you want to play?</span>
+        <span>Kamu ingin memainkan musik apa?</span>
       </button>
       <div class="tb-actions">
         <button id="theme-toggle" class="tb-btn" title="Toggle theme">
@@ -135,11 +135,11 @@ try {
     </div>
     <div class="pb-center">
       <div class="pb-buttons">
-        <button id="mini-shuffle" class="icon-btn sm" title="Shuffle"><svg class="ic"><use href="#i-shuffle"/></svg></button>
-        <button id="mini-prev" class="icon-btn" title="Previous"><svg class="ic"><use href="#i-prev"/></svg></button>
-        <button id="mini-play" class="play-circle" title="Play/Pause"><svg class="ic"><use href="#i-play"/></svg></button>
-        <button id="mini-next" class="icon-btn" title="Next"><svg class="ic"><use href="#i-next"/></svg></button>
-        <button id="mini-repeat" class="icon-btn sm" title="Repeat"><svg class="ic"><use href="#i-repeat"/></svg></button>
+        <button id="mini-shuffle" class="icon-btn sm" title="Acak"><svg class="ic"><use href="#i-shuffle"/></svg></button>
+        <button id="mini-prev" class="icon-btn" title="Sebelumnya"><svg class="ic"><use href="#i-prev"/></svg></button>
+        <button id="mini-play" class="play-circle" title="Putar/Jeda"><svg class="ic"><use href="#i-play"/></svg></button>
+        <button id="mini-next" class="icon-btn" title="Selanjutnya"><svg class="ic"><use href="#i-next"/></svg></button>
+        <button id="mini-repeat" class="icon-btn sm" title="Ulangi"><svg class="ic"><use href="#i-repeat"/></svg></button>
       </div>
       <div class="pb-seek">
         <span id="mini-cur">0:00</span>
@@ -148,8 +148,8 @@ try {
       </div>
     </div>
     <div class="pb-right">
-      <button id="mini-queue" class="icon-btn sm" title="Queue"><svg class="ic"><use href="#i-queue"/></svg></button>
-      <button id="mini-open" class="icon-btn sm" title="Now playing"><svg class="ic"><use href="#i-expand"/></svg></button>
+      <button id="mini-queue" class="icon-btn sm" title="Antrian"><svg class="ic"><use href="#i-queue"/></svg></button>
+      <button id="mini-open" class="icon-btn sm" title="Sedang Di putar"><svg class="ic"><use href="#i-expand"/></svg></button>
       <span class="pb-vol-ic"><svg class="ic"><use href="#i-volume"/></svg></span>
       <input type="range" id="mini-volume" min="0" max="100" value="100" />
     </div>
@@ -165,14 +165,14 @@ try {
       <div class="np-handle" aria-hidden="true"></div>
       <div class="np-topbar">
         <button id="np-close" class="icon-btn" title="Minimize"><svg class="ic"><use href="#i-chev-down"/></svg></button>
-        <span class="np-caption">Now Playing</span>
+        <span class="np-caption">Sedang Diputar</span>
         <button id="np-sleep" class="icon-btn" title="Sleep timer"><svg class="ic"><use href="#i-clock"/></svg></button>
       </div>
       <div class="np-tabs">
-        <button data-nptab="player" class="np-tab active"><svg class="ic"><use href="#i-note"/></svg>Song</button>
-        <button data-nptab="lyrics" class="np-tab"><svg class="ic"><use href="#i-mic"/></svg>Lyrics</button>
-        <button data-nptab="queue" class="np-tab"><svg class="ic"><use href="#i-queue"/></svg>Queue</button>
-        <button data-nptab="related" class="np-tab"><svg class="ic"><use href="#i-radio"/></svg>Related</button>
+        <button data-nptab="player" class="np-tab active"><svg class="ic"><use href="#i-note"/></svg>Lagu</button>
+        <button data-nptab="lyrics" class="np-tab"><svg class="ic"><use href="#i-mic"/></svg>Lirik</button>
+        <button data-nptab="queue" class="np-tab"><svg class="ic"><use href="#i-queue"/></svg>Antrian</button>
+        <button data-nptab="related" class="np-tab"><svg class="ic"><use href="#i-radio"/></svg>Terkait</button>
       </div>
       <div class="np-body">
         <section id="np-player" class="np-pane active">
@@ -187,36 +187,36 @@ try {
             <span id="np-dur">0:00</span>
           </div>
           <div class="np-controls">
-            <button id="np-shuffle" class="icon-btn" title="Shuffle"><svg class="ic"><use href="#i-shuffle"/></svg></button>
-            <button id="np-prev" class="icon-btn" title="Previous"><svg class="ic"><use href="#i-prev"/></svg></button>
-            <button id="np-play" class="play-big" title="Play/Pause"><svg class="ic"><use href="#i-play"/></svg></button>
-            <button id="np-next" class="icon-btn" title="Next"><svg class="ic"><use href="#i-next"/></svg></button>
-            <button id="np-repeat" class="icon-btn" title="Repeat"><svg class="ic"><use href="#i-repeat"/></svg></button>
+            <button id="np-shuffle" class="icon-btn" title="Acak"><svg class="ic"><use href="#i-shuffle"/></svg></button>
+            <button id="np-prev" class="icon-btn" title="Sebelumnya"><svg class="ic"><use href="#i-prev"/></svg></button>
+            <button id="np-play" class="play-big" title="Putar/Jeda"><svg class="ic"><use href="#i-play"/></svg></button>
+            <button id="np-next" class="icon-btn" title="Selanjutnya"><svg class="ic"><use href="#i-next"/></svg></button>
+            <button id="np-repeat" class="icon-btn" title="Ulangi"><svg class="ic"><use href="#i-repeat"/></svg></button>
           </div>
           <div class="np-actions">
-            <button id="np-playnext" class="pill-btn hidden" title="Play next"><svg class="ic"><use href="#i-next"/></svg><span>Play next</span></button>
-            <button id="np-queueadd" class="pill-btn hidden" title="Add to queue"><svg class="ic"><use href="#i-queue"/></svg><span>Add to queue</span></button>
-            <button id="np-like" class="pill-btn"><svg class="ic"><use href="#i-heart-o"/></svg><span>Favorite</span></button>
-            <button id="np-addpl" class="pill-btn"><svg class="ic"><use href="#i-plus"/></svg><span>Playlist</span></button>
-            <button id="np-more" class="pill-btn" title="More"><svg class="ic"><use href="#i-more"/></svg><span>More</span></button>
-            <button id="np-download" class="pill-btn np-extra" title="Download"><svg class="ic"><use href="#i-download"/></svg><span>Download</span></button>
-            <button id="np-share" class="pill-btn np-extra" title="Share"><svg class="ic"><use href="#i-share"/></svg><span>Share</span></button>
+            <button id="np-playnext" class="pill-btn hidden" title="Putar selanjutnya"><svg class="ic"><use href="#i-next"/></svg><span>Play next</span></button>
+            <button id="np-queueadd" class="pill-btn hidden" title="Tambah ke antrian"><svg class="ic"><use href="#i-queue"/></svg><span>Add to queue</span></button>
+            <button id="np-like" class="pill-btn"><svg class="ic"><use href="#i-heart-o"/></svg><span>Favorit</span></button>
+            <button id="np-addpl" class="pill-btn"><svg class="ic"><use href="#i-plus"/></svg><span>Daftar Putar</span></button>
+            <button id="np-more" class="pill-btn" title="More"><svg class="ic"><use href="#i-more"/></svg><span>Lagi</span></button>
+            <button id="np-download" class="pill-btn np-extra" title="Unduh"><svg class="ic"><use href="#i-download"/></svg><span>Unduh</span></button>
+            <button id="np-share" class="pill-btn np-extra" title="Share"><svg class="ic"><use href="#i-share"/></svg><span>Berbagi</span></button>
             <button id="np-speed" class="pill-btn np-extra" title="Playback speed"><svg class="ic"><use href="#i-clock"/></svg><span>1×</span></button>
             <button id="np-float" class="pill-btn np-extra" title="Floating widget"><svg class="ic"><use href="#i-pip"/></svg><span>Widget</span></button>
-            <button id="np-quality" class="pill-btn np-extra" title="YouTube Music audio — tap for YouTube max quality"><span>Quality</span></button>
+            <button id="np-quality" class="pill-btn np-extra" title="YouTube Music audio — tap for YouTube max quality"><span>Kualitas</span></button>
             <button id="np-sb" class="pill-btn np-extra" title="SponsorBlock auto-skip"><svg class="ic"><use href="#i-next"/></svg><span>SB</span></button>
             <div class="np-volume">
               <svg class="ic vol-ic"><use href="#i-volume"/></svg><input type="range" id="np-volume" min="0" max="100" value="100" />
             </div>
           </div>
-          <div id="np-lyric-preview" title="Open lyrics"></div>
+          <div id="np-lyric-preview" title="Buka lirik"></div>
         </section>
         <section id="np-lyrics" class="np-pane">
-          <div id="lyrics-container"><div class="lyrics-empty">No lyrics yet</div></div>
+          <div id="lyrics-container"><div class="lyrics-empty">Belum ada lirik</div></div>
           <div id="lyrics-source"></div>
         </section>
         <section id="np-queue" class="np-pane"><div id="queue-list"></div></section>
-        <section id="np-related" class="np-pane"><div id="related-list" class="loading-note">Loading…</div></section>
+        <section id="np-related" class="np-pane"><div id="related-list" class="loading-note">Memuat…</div></section>
       </div>
     </div>
   </div>
@@ -224,10 +224,10 @@ try {
   <!-- Add-to-playlist modal -->
   <div id="modal" class="hidden">
     <div class="modal-card">
-      <h3 id="modal-title">Add to playlist</h3>
+      <h3 id="modal-title">Tambah ke daftar putar</h3>
       <div id="modal-body"></div>
       <div class="modal-actions">
-        <button id="modal-cancel" class="pill-btn">Close</button>
+        <button id="modal-cancel" class="pill-btn">Tutup</button>
       </div>
     </div>
   </div>
@@ -244,10 +244,10 @@ try {
       <div class="fw-bar" id="fw-bar"><div id="fw-fill"></div></div>
     </div>
     <div class="fw-controls">
-      <button type="button" class="fw-btn" data-fw="prev" title="Previous"><svg class="ic"><use href="#i-prev"/></svg></button>
-      <button type="button" class="fw-btn fw-play" data-fw="play" title="Play/Pause"><svg class="ic"><use href="#i-play"/></svg></button>
-      <button type="button" class="fw-btn" data-fw="next" title="Next"><svg class="ic"><use href="#i-next"/></svg></button>
-      <button type="button" class="fw-btn" data-fw="close" title="Close widget"><svg class="ic"><use href="#i-x"/></svg></button>
+      <button type="button" class="fw-btn" data-fw="prev" title="Sebelumnya"><svg class="ic"><use href="#i-prev"/></svg></button>
+      <button type="button" class="fw-btn fw-play" data-fw="play" title="Putar/Jeda"><svg class="ic"><use href="#i-play"/></svg></button>
+      <button type="button" class="fw-btn" data-fw="next" title="Selanjutnya"><svg class="ic"><use href="#i-next"/></svg></button>
+      <button type="button" class="fw-btn" data-fw="close" title="Tutup Jendela"><svg class="ic"><use href="#i-x"/></svg></button>
     </div>
   </div>
 
