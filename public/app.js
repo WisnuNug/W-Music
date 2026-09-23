@@ -812,14 +812,14 @@ function renderSideQueue() {
       <span class="sq-meta"><span class="sq-t">${esc(now.title)}</span><br><span class="sq-s">${esc(now.artist || now.subtitle || '')}</span></span>
     </button>`;
   if (user.length) {
-    html += `<div class="sq-sec">Your queue · ${user.length}</div>`;
+    html += `<div class="sq-sec">Antrian mu · ${user.length}</div>`;
     html += user.map(({ q, i }, n) => `<button type="button" class="sq-row" data-qi="${i}">
       <span class="sq-n">${n + 1}</span>
       ${coverHTML(q.thumbnail, 'sq')}
       <span class="sq-meta"><span class="sq-t">${esc(q.title)}</span><br><span class="sq-s">${esc(q.artist || q.subtitle || '')}</span></span>
     </button>`).join('');
   } else {
-    html += `<div class="sq-empty">Your queue is empty. Tap ${icon('i-queue')} on a song.</div>`;
+    html += `<div class="sq-empty">Antrian anda kosong. Tekan ${icon('i-queue')} pada lagu.</div>`;
   }
   el.innerHTML = html;
   $$('.sq-row', el).forEach((b) => b.addEventListener('click', () => {
@@ -855,8 +855,8 @@ function renderQueue() {
   if (!el) return;
   if (!Player.queue.length) {
     el.innerHTML = `<div class="q-empty">
-      <div class="q-empty-title">Queue is empty</div>
-      <div class="q-empty-s">Tap the queue icon on any song to add it here. Songs you add play before radio.</div>
+      <div class="q-empty-title">Antrian Kosong</div>
+      <div class="q-empty-s">Tekan antrian ikon pada lagu apa saja untuk menambahkan. Lagu yang Anda tambahkan diputar sebelum radio.</div>
     </div>`;
     persistQueue();
     return;
@@ -877,9 +877,9 @@ function renderQueue() {
       const up = n === 0 ? ' disabled' : '';
       const dn = n === user.length - 1 ? ' disabled' : '';
       return trackRowHTML({ ...q, qi: i, qn: n + 1 }, false,
-        `<button class="tbtn btn-qup" data-qi="${i}" title="Move up"${up}>${icon('i-chev-up')}</button>` +
-        `<button class="tbtn btn-qdn" data-qi="${i}" title="Move down"${dn}>${icon('i-chev-down')}</button>` +
-        `<button class="tbtn btn-qrm" data-qi="${i}" title="Remove from queue">${icon('i-x')}</button>`);
+        `<button class="tbtn btn-qup" data-qi="${i}" title="Naikann"${up}>${icon('i-chev-up')}</button>` +
+        `<button class="tbtn btn-qdn" data-qi="${i}" title="Turunkan"${dn}>${icon('i-chev-down')}</button>` +
+        `<button class="tbtn btn-qrm" data-qi="${i}" title="Hapus dari antrian">${icon('i-x')}</button>`);
     }).join('');
   } else {
     html += `<div class="q-head">Your queue</div><div class="q-hint">Nothing queued yet — tap the queue icon on a song, or Play next on Now Playing.</div>`;
@@ -948,10 +948,10 @@ async function loadRelated(force = false) {
   const el = $('#related-list');
   if (!el) return;
   const song = Player.current;
-  if (!song) { el.innerHTML = '<div class="loading-note">Play a song first</div>'; return; }
+  if (!song) { el.innerHTML = '<div class="loading-note">Putar lagu dulu</div>'; return; }
   if (Player._relatedLoaded && !force) return;
   Player._relatedLoaded = true;
-  el.innerHTML = '<div class="loading-note">Loading…</div>';
+  el.innerHTML = '<div class="loading-note">Memuat…</div>';
 
   const vid = song.videoId;
   const sameSong = () => Player.current && Player.current.videoId === vid;
