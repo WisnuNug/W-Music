@@ -322,18 +322,18 @@ function queueSong(song, playNext = false) {
   const s = { ...normalizeSong(song), _user: true };
   if (!Player.current) { playSong(s); return; }
   if (!playNext && alreadyQueued(song.videoId)) {
-    toast('Already in your queue');
+    toast('Sudah ada di antrianmu');
     renderQueue();
     return;
   }
   if (playNext) {
     Player.queue.splice(Player.index + 1, 0, s);
-    toast('Playing next');
+    toast('Mainkan selanjutnya');
   } else {
     let i = Player.index + 1;
     while (i < Player.queue.length && Player.queue[i]._user) i++;
     Player.queue.splice(i, 0, s);
-    toast('Added to your queue');
+    toast('Tambahkan ke antrianmu');
   }
   renderQueue();
 }
@@ -346,7 +346,7 @@ function removeQueued(i) {
 function clearUserQueue() {
   Player.queue = Player.queue.filter((q, i) => i <= Player.index || !q._user);
   renderQueue();
-  toast('Queue cleared');
+  toast('Antrian di bersihkan');
 }
 function slimSong(s) {
   if (!s || !s.videoId) return null;
@@ -839,12 +839,12 @@ function updateQueueTab() {
   $$('.np-tab').forEach((t) => {
     if (t.dataset.nptab !== 'queue') return;
     const ic = t.querySelector('svg');
-    t.innerHTML = (ic ? ic.outerHTML : icon('i-queue')) + (n ? `Queue · ${n}` : 'Queue');
+    t.innerHTML = (ic ? ic.outerHTML : icon('i-queue')) + (n ? `Antrian · ${n}` : 'Antrian');
   });
   [$('#mini-queue'), $('#mini-queue-m')].forEach((b) => {
     if (!b) return;
     b.classList.toggle('has-q', n > 0);
-    b.title = n ? `Queue · ${n}` : 'Queue';
+    b.title = n ? `Antrian · ${n}` : 'Antrian';
   });
 }
 function renderQueue() {
@@ -1644,7 +1644,7 @@ async function viewSearch(view, q = '', filter = null) {
     ${q ? `<div class="search-chips">${filters.map((f) => `<button type="button" class="chip ${((filter || 'all') === f) ? 'active' : ''}" data-f="${f}">${f[0].toUpperCase() + f.slice(1)}</button>`).join('')}</div>` : recentSearchHTML()}
     <div id="search-results">${q
       ? '<div class="loading-note">Mencari…</div>'
-      : `${hist.length ? `<div class="shelf"><div class="shelf-title">Recently played</div><div class="track-list">${hist.map((s) => trackRowHTML({ ...s, subtitle: s.artist })).join('')}</div></div>` : ''}<div id="browse-all"><div class="shelf-title">Browse all</div><div class="mood-grid" id="browse-grid"><div class="loading-note">Loading…</div></div></div>`}</div>`;
+      : `${hist.length ? `<div class="shelf"><div class="shelf-title">Baru saja diputar</div><div class="track-list">${hist.map((s) => trackRowHTML({ ...s, subtitle: s.artist })).join('')}</div></div>` : ''}<div id="browse-all"><div class="shelf-title">Telusuri semua</div><div class="mood-grid" id="browse-grid"><div class="loading-note">Memuat…</div></div></div>`}</div>`;
   bindSearchChrome(view, q, filter);
   if (!q) bindItems($('#search-results'));
   if (!q) {
@@ -1741,39 +1741,39 @@ function viewStats(view) {
 
 /* ---- Library ---- */
 function viewLibrary(view, tab) {
-  const tabs = [['playlists', 'Playlists'], ['favorites', 'Favorites'], ['saved', 'Saved'], ['history', 'History'], ['stats', 'Stats']];
+  const tabs = [['playlists', 'Daftar Putar'], ['favorites', 'Favorit'], ['saved', 'Disimpan'], ['history', 'Riwayat'], ['stats', 'Statistik']];
   if (tab === 'stats') { go('#/stats'); return; }
   let body = '';
   if (tab === 'favorites') {
     const f = Library.favorites;
     body = f.length
-      ? `<div class="lib-actions"><button class="pill-btn primary" id="fav-play">${icon('i-play')}<span>Play all</span></button> <button class="pill-btn" id="fav-shuffle">${icon('i-shuffle')}<span>Shuffle</span></button></div>
+      ? `<div class="lib-actions"><button class="pill-btn primary" id="fav-play">${icon('i-play')}<span>Putar semua</span></button> <button class="pill-btn" id="fav-shuffle">${icon('i-shuffle')}<span>Acak</span></button></div>
          ${trackHeadHTML()}<div class="track-list">${f.map((s, i) => trackRowHTML({ ...s, subtitle: s.artist, tn: i + 1 })).join('')}</div>`
-      : emptyHTML('No liked songs yet', 'Tap the heart on any song to save it here.', { label: 'Find songs', go: '#/search', ic: 'i-heart-o' });
+      : emptyHTML('Belum ada lagu yang disukai', 'Ketuk ikon hati pada lagu mana pun untuk menyimpannya di sini.', { label: 'Temukan lagu', go: '#/search', ic: 'i-heart-o' });
   } else if (tab === 'history') {
     const h = Library.history;
     body = h.length
       ? `${trackHeadHTML()}<div class="track-list">${h.map((s, i) => trackRowHTML({ ...s, subtitle: s.artist, tn: i + 1 })).join('')}</div>`
-      : emptyHTML('Nothing played yet', 'Songs you play will show up here.', { label: 'Browse home', go: '#/home', ic: 'i-clock' });
+      : emptyHTML('Belum ada yang diputar', 'Lagu yang Anda putar akan muncul di sini.', { label: 'Telusuri beranda', go: '#/home', ic: 'i-clock' });
   } else if (tab === 'saved') {
     const sv = Library.saved;
     body = sv.length
       ? `<div class="lib-grid">${sv.map(cardHTML).join('')}</div>`
-      : emptyHTML('Nothing saved yet', 'Open any album, playlist or artist and tap Save.', { label: 'Browse moods', go: '#/moods', ic: 'i-save' });
+      : emptyHTML('Belum ada yang disimpan', 'Buka album, playlist, atau artis mana pun, lalu ketuk Simpan.', { label: 'Jelajahi suasana hati', go: '#/moods', ic: 'i-save' });
   } else {
     const pls = Library.playlists;
     body = `<div class="lib-actions">
-        <button class="pill-btn primary" id="btn-newpl">${icon('i-plus')}<span>New playlist</span></button>
-        <button class="pill-btn" id="btn-import">${icon('i-download')}<span>Import from YT Music</span></button>
+        <button class="pill-btn primary" id="btn-newpl">${icon('i-plus')}<span>Daftar Putar</span></button>
+        <button class="pill-btn" id="btn-import">${icon('i-download')}<span>Impor dari YT Music</span></button>
         <button class="pill-btn" id="btn-backup">${icon('i-download')}<span>Backup</span></button>
         <button class="pill-btn" id="btn-restore">${icon('i-upload')}<span>Restore</span></button>
       </div>`;
     const cards = (Library.favorites.length ? likedCardHTML() : '') + pls.map((p) => `<div class="card" data-pl="${p.id}"><div class="art">${coverHTML(p.tracks[0] && p.tracks[0].thumbnail)}<div class="play-ov">${icon('i-play')}</div></div><div class="t">${esc(p.name)}</div><div class="s">${p.tracks.length} songs</div></div>`).join('');
     body += cards
       ? `<div class="lib-grid">${cards}</div>`
-      : emptyHTML('No playlists yet', 'Use New playlist above, or import one from YouTube Music.', { ic: 'i-note' });
+      : emptyHTML('No playlists yet', 'Gunakan opsi "Buat daftar putar baru" di atas, atau impor daftar putar dari YouTube Music.', { ic: 'i-note' });
   }
-  view.innerHTML = `<div class="page-title">Library</div>
+  view.innerHTML = `<div class="page-title">Pustaka</div>
     <div class="chip-row">${tabs.map(([id, l]) => `<button class="chip ${tab === id ? 'active' : ''}" onclick="location.hash='#/library/${id}'">${l}</button>`).join('')}</div>${body}`;
   bindItems(view);
   const np = $('#btn-newpl');
@@ -1801,11 +1801,11 @@ function openImportForm() {
   if (actions) actions.classList.add('hidden');
   body.innerHTML = `<form class="pl-form" id="im-form" autocomplete="off">
       <div class="pl-form-cover im" aria-hidden="true">${icon('i-download')}</div>
-      <label class="pl-form-label" for="im-form-url">Link</label>
+      <label class="pl-form-label" for="im-form-url">Tautan</label>
       <input id="im-form-url" class="pl-form-input" type="text" inputmode="url" placeholder="https://music.youtube.com/playlist?list=…" />
-      <div class="pl-form-hint">Paste a public YouTube Music playlist, album, artist, or song link.</div>
+      <div class="pl-form-hint">Tempelkan tautan playlist publik, album, artis, atau lagu YouTube Music.</div>
       <div class="pl-form-actions">
-        <button type="button" class="pill-btn" id="im-form-cancel">Cancel</button>
+        <button type="button" class="pill-btn" id="im-form-cancel">Batal</button>
         <button type="submit" class="pill-btn primary" id="im-form-go">${icon('i-download')}<span>Import</span></button>
       </div>
     </form>`;
@@ -1836,7 +1836,7 @@ async function importFromLink(url) {
   toast('Resolving link…');
   const r = await api(`/api/resolve?url=${encodeURIComponent(url)}`);
   if (r.kind === 'song') {
-    let song = { videoId: r.videoId, title: 'Loading…', playlistId: r.playlistId };
+    let song = { videoId: r.videoId, title: 'Memuat…', playlistId: r.playlistId };
     try {
       const n = await api(`/api/next?videoId=${encodeURIComponent(r.videoId)}`);
       const hit = (n.queue || []).find((q) => q.videoId === r.videoId) || (n.queue || [])[0];
@@ -1847,7 +1847,7 @@ async function importFromLink(url) {
   }
   if (r.kind === 'artist') { go(`#/artist/${r.id}`); return; }
   const d = await api(`/api/browse?id=${encodeURIComponent(r.id)}`);
-  if (!d.tracks.length) { toast('No tracks found (playlist may be private)'); return; }
+  if (!d.tracks.length) { toast('Tidak ada lagu yang ditemukan (daftar putar mungkin bersifat pribadi)'); return; }
   const name = (d.header && d.header.title) || 'Imported playlist';
   const pl = Library.createPlaylist(name);
   d.tracks.forEach((t) => Library.addToPlaylist(pl.id, songFromItem(t)));
@@ -1950,21 +1950,21 @@ function viewLocalPlaylist(view, pid) {
     const up = i === 0 ? ' disabled' : '';
     const dn = i === pl.tracks.length - 1 ? ' disabled' : '';
     return trackRowHTML({ ...s, subtitle: s.artist, plId: pid, plIndex: i, tn: i + 1 }, false,
-      `<button class="tbtn btn-qup" data-i="${i}" title="Move up"${up}>${icon('i-chev-up')}</button>` +
-      `<button class="tbtn btn-qdn" data-i="${i}" title="Move down"${dn}>${icon('i-chev-down')}</button>` +
-      `<button class="tbtn btn-rm" data-vid="${esc(s.videoId)}" title="Remove">${icon('i-x')}</button>`);
+      `<button class="tbtn btn-qup" data-i="${i}" title="Naikan"${up}>${icon('i-chev-up')}</button>` +
+      `<button class="tbtn btn-qdn" data-i="${i}" title="Turunkan"${dn}>${icon('i-chev-down')}</button>` +
+      `<button class="tbtn btn-rm" data-vid="${esc(s.videoId)}" title="Hapus">${icon('i-x')}</button>`);
   }).join('');
   const cover = safeCover(pl.tracks[0] && pl.tracks[0].thumbnail)
     ? `<img src="${esc(pl.tracks[0].thumbnail)}" alt="">`
     : `<div class="detail-ph">${icon('i-note')}</div>`;
   view.innerHTML = `<div class="detail-head">
       ${cover}
-      <div class="detail-info"><div class="detail-kicker">Playlist</div><h1>${esc(pl.name)}</h1><div class="sub">${pl.tracks.length} song${pl.tracks.length === 1 ? '' : 's'} · Local playlist</div>
+      <div class="detail-info"><div class="detail-kicker">Daftar Putar</div><h1>${esc(pl.name)}</h1><div class="sub">${pl.tracks.length} song${pl.tracks.length === 1 ? '' : 's'} · Local playlist</div>
       <div class="detail-actions">
-        <button class="pill-btn primary" id="pl-play">${icon('i-play')}<span>Play</span></button>
-        <button class="pill-btn" id="pl-shuffle">${icon('i-shuffle')}<span>Shuffle</span></button>
-        <button class="pill-btn" id="pl-rename">${icon('i-note')}<span>Rename</span></button>
-        <button class="pill-btn" id="pl-del">${icon('i-trash')}<span>Delete</span></button>
+        <button class="pill-btn primary" id="pl-play">${icon('i-play')}<span>Putar</span></button>
+        <button class="pill-btn" id="pl-shuffle">${icon('i-shuffle')}<span>Acak</span></button>
+        <button class="pill-btn" id="pl-rename">${icon('i-note')}<span>Ubah Nama</span></button>
+        <button class="pill-btn" id="pl-del">${icon('i-trash')}<span>Hapus</span></button>
       </div></div></div>
     ${rows ? trackHeadHTML() + `<div class="track-list">${rows}</div>` : emptyHTML('This playlist is empty', 'Open any song and tap Playlist to add it here.', { label: 'Find songs', go: '#/search', ic: 'i-note' })}`;
   bindItems(view);
@@ -2096,13 +2096,13 @@ function openSongMenu(song, opts = {}) {
       ${coverHTML(song.thumbnail, 'sm')}
       <div class="sm-meta"><div class="sm-t">${esc(displayTitle(song.title))}</div><div class="sm-s">${esc(song.artist || song.subtitle || '')}</div></div>
     </div>
-    ${row('next', 'i-next', 'Play next')}
-    ${row('queue', 'i-queue', 'Add to queue')}
-    ${row('fav', liked ? 'i-heart-f' : 'i-heart-o', liked ? 'Favorited' : 'Favorite')}
-    ${row('pl', 'i-plus', 'Add to playlist')}
-    ${row('dl', 'i-download', 'Download')}
-    ${row('share', 'i-share', 'Share')}
-    ${row('artist', 'i-search', 'Go to artist')}
+    ${row('next', 'i-next', 'Putar Selanjutnya')}
+    ${row('queue', 'i-queue', 'Tambah ke antrian')}
+    ${row('fav', liked ? 'i-heart-f' : 'i-heart-o', liked ? 'Disukai' : 'Sukai')}
+    ${row('pl', 'i-plus', 'Tambah ke daftar putar')}
+    ${row('dl', 'i-download', 'Unduh')}
+    ${row('share', 'i-share', 'Berbagi')}
+    ${row('artist', 'i-search', 'Buka halaman artis')}
     ${inUserQ ? `${row('up', 'i-chev-up', 'Move up', isFirst)}${row('dn', 'i-chev-down', 'Move down', isLast)}${row('rm', 'i-x', 'Remove from queue')}` : ''}
     ${inPl ? `${row('plup', 'i-chev-up', 'Move up', isPlFirst)}${row('pldn', 'i-chev-down', 'Move down', isPlLast)}${row('plrm', 'i-x', 'Remove from playlist')}` : ''}`;
   $$('[data-act]', body).forEach((b) => b.addEventListener('click', () => {
