@@ -882,7 +882,7 @@ function renderQueue() {
         `<button class="tbtn btn-qrm" data-qi="${i}" title="Hapus dari antrian">${icon('i-x')}</button>`);
     }).join('');
   } else {
-    html += `<div class="q-head">Your queue</div><div class="q-hint">Belum ada antrean — ketuk ikon antrean pada lagu, atau pilih "Putar berikutnya" di layar Sedang Diputar.</div>`;
+    html += `<div class="q-head">Antriamu</div><div class="q-hint">Belum ada antrean — ketuk ikon antrean pada lagu, atau pilih "Putar berikutnya" di layar Sedang Diputar.</div>`;
   }
   if (radio.length) {
     html += `<div class="q-head">Dari radio · ${radio.length}</div>`;
