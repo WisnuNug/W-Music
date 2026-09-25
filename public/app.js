@@ -867,25 +867,25 @@ function renderQueue() {
   const radio = upcoming.filter((x) => !x.q._user);
   const now = Player.current;
   let html = '';
-  html += `<div class="q-note">Your queue plays first. Radio fills in after.</div>`;
+  html += `<div class="q-note">Antrian Anda akan diputar terlebih dahulu. Radio menyusul setelahnya.</div>`;
   if (now) {
-    html += `<div class="q-head">Now playing</div>${trackRowHTML({ ...now, qi: Player.index }, true)}`;
+    html += `<div class="q-head">Sedang Memutar</div>${trackRowHTML({ ...now, qi: Player.index }, true)}`;
   }
   if (user.length) {
-    html += `<div class="q-head q-head-row"><span>Your queue · ${user.length}</span><button type="button" class="q-clear" id="q-clear">Clear</button></div>`;
+    html += `<div class="q-head q-head-row"><span>Antrianmu · ${user.length}</span><button type="button" class="q-clear" id="q-clear">Clear</button></div>`;
     html += user.map(({ q, i }, n) => {
       const up = n === 0 ? ' disabled' : '';
       const dn = n === user.length - 1 ? ' disabled' : '';
       return trackRowHTML({ ...q, qi: i, qn: n + 1 }, false,
-        `<button class="tbtn btn-qup" data-qi="${i}" title="Naikann"${up}>${icon('i-chev-up')}</button>` +
+        `<button class="tbtn btn-qup" data-qi="${i}" title="Naikkan"${up}>${icon('i-chev-up')}</button>` +
         `<button class="tbtn btn-qdn" data-qi="${i}" title="Turunkan"${dn}>${icon('i-chev-down')}</button>` +
         `<button class="tbtn btn-qrm" data-qi="${i}" title="Hapus dari antrian">${icon('i-x')}</button>`);
     }).join('');
   } else {
-    html += `<div class="q-head">Your queue</div><div class="q-hint">Nothing queued yet — tap the queue icon on a song, or Play next on Now Playing.</div>`;
+    html += `<div class="q-head">Your queue</div><div class="q-hint">Belum ada antrean — ketuk ikon antrean pada lagu, atau pilih "Putar berikutnya" di layar Sedang Diputar.</div>`;
   }
   if (radio.length) {
-    html += `<div class="q-head">From radio · ${radio.length}</div>`;
+    html += `<div class="q-head">Dari radio · ${radio.length}</div>`;
     html += radio.map(({ q, i }) => trackRowHTML({ ...q, qi: i, qRadio: true }, false)).join('');
   }
   el.innerHTML = html;
@@ -964,8 +964,8 @@ async function loadRelated(force = false) {
 
   const renderFail = () => {
     Player._relatedLoaded = false;
-    el.innerHTML = `<div class="loading-note">Couldn't load related content<br><br>
-      <button class="pill-btn" id="related-retry">${icon('i-repeat')}<span>Try again</span></button></div>`;
+    el.innerHTML = `<div class="loading-note">Tidak dapat memuat konten terkait<br><br>
+      <button class="pill-btn" id="related-retry">${icon('i-repeat')}<span>Coba Lagi</span></button></div>`;
     const rb = $('#related-retry', el);
     if (rb) rb.addEventListener('click', () => loadRelated(true));
   };
@@ -1033,12 +1033,12 @@ function clickDownload(href, name) {
 }
 async function downloadSong(song) {
   if (!song || !song.videoId) return;
-  if (activeDownloads.has(song.videoId)) { toast('Already downloading this song…'); return; }
+  if (activeDownloads.has(song.videoId)) { toast('Sedang mengunduh lagu ini…'); return; }
   activeDownloads.add(song.videoId);
-  toast(`Preparing "${song.title}" (320kbps MP3)…`);
+  toast(`Menyiapkan "${song.title}" (320kbps MP3)…`);
   try {
     const st = await api(`/api/download-start?videoId=${encodeURIComponent(song.videoId)}`);
-    if (!st.progressUrl) throw new Error('no progress url');
+    if (!st.progressUrl) throw new Error('tidak ada progress url');
     let url = null;
     let lastProg = -1;
     for (let i = 0; i < 60; i++) {
@@ -1050,12 +1050,12 @@ async function downloadSong(song) {
         const pct = Math.min(99, raw > 100 ? Math.round(raw / 10) : Math.round(raw));
         if (pct !== lastProg) {
           lastProg = pct;
-          toast(pct <= 5 && p.text ? String(p.text) : `Converting "${song.title}"… ${pct}%`);
+          toast(pct <= 5 && p.text ? String(p.text) : `Mengonversi "${song.title}"… ${pct}%`);
         }
       } catch {}
     }
     if (!url) throw new Error('timeout');
-    toast(`Downloading "${song.title}"…`);
+    toast(`Mengunduh "${song.title}"…`);
     const name = downloadFilename(song);
     try {
       const r = await fetch(url, { mode: 'cors' });
@@ -1067,9 +1067,9 @@ async function downloadSong(song) {
     } catch {
       clickDownload(url, name);
     }
-    toast('Download started');
+    toast('Unduhan dimulai');
   } catch (e) {
-    toast('Download failed — try again later');
+    toast('Unduhan gagal — coba lagi nanti');
   } finally {
     activeDownloads.delete(song.videoId);
   }
