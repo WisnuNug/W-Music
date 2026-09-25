@@ -1416,7 +1416,7 @@ async function viewHome(view) {
   view.innerHTML = skeletonHTML;
   const now = new Date();
   const h = now.getHours();
-  const greet = h < 11 ? 'Good morning' : h < 16 ? 'Good afternoon' : 'Good evening';
+  const greet = h < 11 ? 'Selamat Pagi' : h < 16 ? 'Selamat Siang' : 'Selamat Malam';
   applyTint(greet);
   const d = await api('/api/home');
   const hist = Library.history.slice(0, 16);
@@ -1426,19 +1426,19 @@ async function viewHome(view) {
   const dateLine = now.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long' });
   let html = `<div class="hello-row"><div><div class="greeting">${esc(dateLine)}</div><h1 class="page-title">${greet}</h1></div></div>`;
   if (hist.length) {
-    html += `<div class="shelf-title">Recently played</div><div class="quick-grid">${hist.slice(0, 8).map((s) => quickCardHTML({ ...s, type: 'song', subtitle: s.artist })).join('')}</div>`;
+    html += `<div class="shelf-title">Baru saja diputar</div><div class="quick-grid">${hist.slice(0, 8).map((s) => quickCardHTML({ ...s, type: 'song', subtitle: s.artist })).join('')}</div>`;
   }
   html += `<div id="mix-slot"></div>`;
   if (hist.length > 8) {
-    html += `<div class="shelf"><div class="shelf-title">Jump back in</div>${carouselHTML(hist
+    html += `<div class="shelf"><div class="shelf-title">Masuk kembali</div>${carouselHTML(hist
       .slice(8).map((s) => cardHTML({ ...s, type: 'song', subtitle: s.artist })).join(''))}</div>`;
   }
   if (favs.length) {
-    html += `<div class="shelf"><div class="shelf-title">Liked songs</div>
+    html += `<div class="shelf"><div class="shelf-title">Lagu yg di sukai</div>
       ${carouselHTML(favs.map((s) => cardHTML({ ...s, type: 'song', subtitle: s.artist })).join(''))}</div>`;
   }
   if (pls.length) {
-    html += `<div class="shelf"><div class="shelf-title">Your playlists</div>
+    html += `<div class="shelf"><div class="shelf-title">Daftar Putar Anda</div>
       ${carouselHTML(pls.map((p) => `<div class="card" data-pl="${esc(p.id)}">
         <div class="art">${coverHTML(p.tracks[0] && p.tracks[0].thumbnail)}<div class="play-ov">${icon('i-play')}</div></div>
         <div class="t">${esc(p.name)}</div><div class="s">${p.tracks.length} songs</div>
@@ -1469,13 +1469,13 @@ async function loadMixForYou() {
       type: 'song', videoId: q.videoId, title: q.title, subtitle: q.artist, thumbnail: q.thumbnail,
     }));
     if (!items.length) return;
-    slot.innerHTML = shelfHTML({ title: `Mix for you · based on “${seed.title}”`, items });
+    slot.innerHTML = shelfHTML({ title: `Rekomendasi untukmu · berdasarkan “${seed.title}”`, items });
     bindItems(slot);
   } catch {}
 }
 
 /* ---- Search ---- */
-const SEARCH_TYPE_LABEL = { song: 'Songs', video: 'Videos', album: 'Albums', artist: 'Artists', playlist: 'Playlists', browse: 'More' };
+const SEARCH_TYPE_LABEL = { song: 'Lagu', video: 'Video', album: 'Album', artist: 'Artis', playlist: 'Daftar Putar', browse: 'Lagi' };
 function pushRecentSearch(q) {
   q = String(q || '').trim();
   if (!q) return;
@@ -1506,7 +1506,7 @@ function topResultHTML(it) {
   return `<button type="button" class="sr-top ${kind}" data-item='${esc(JSON.stringify(it))}'>
     ${coverHTML(it.thumbnail, 'sr')}
     <div class="sr-meta">
-      <div class="sr-kicker">Top result</div>
+      <div class="sr-kicker">Hasil Teratas</div>
       <div class="sr-title">${esc(displayTitle(it.title) || it.title)}</div>
       <div class="sr-sub">${esc(it.subtitle || it.artist || '')}</div>
       <span class="pill-btn primary">${icon(ic)}<span>${cta}</span></span>
@@ -1515,7 +1515,7 @@ function topResultHTML(it) {
 }
 function searchResultsHTML(sections) {
   if (!sections || !sections.length) {
-    return emptyHTML('No results', 'Try a different spelling or another artist, song, or playlist.', { ic: 'i-search' });
+    return emptyHTML('Tidak ada hasil', 'Coba ejaan lain atau artis, lagu, maupun playlist yang berbeda.', { ic: 'i-search' });
   }
   let html = '';
   const leftover = [];
@@ -1531,8 +1531,8 @@ function searchResultsHTML(sections) {
     const allRow = leftover.every((i) => !isSearchCard(i));
     if (allCard || allRow) {
       html += allRow
-        ? `<div class="shelf"><div class="shelf-title">${esc(sections[0].title || 'Songs')}</div><div class="track-list">${leftover.map((i) => trackRowHTML(i)).join('')}</div></div>`
-        : `<div class="shelf"><div class="shelf-title">${esc(sections[0].title || 'Results')}</div>${carouselHTML(leftover.map(cardHTML).join(''))}</div>`;
+        ? `<div class="shelf"><div class="shelf-title">${esc(sections[0].title || 'Lagu')}</div><div class="track-list">${leftover.map((i) => trackRowHTML(i)).join('')}</div></div>`
+        : `<div class="shelf"><div class="shelf-title">${esc(sections[0].title || 'Hasil')}</div>${carouselHTML(leftover.map(cardHTML).join(''))}</div>`;
       return html;
     }
   }
@@ -1550,7 +1550,7 @@ function searchResultsHTML(sections) {
       ? `<div class="shelf"><div class="shelf-title">${title}</dijoin('')}</div></div>`
       : `<div class="shelf"><div class="shelf-title">${title}</div>${carouselHTML(items.map(cardHTML).join(''))}</div>`;
   });
-  return html || emptyHTML('No results', 'Try a different spelling or another artist, song, or playlist.', { ic: 'i-search' });
+  return html || emptyHTML('Tidak ada hasil', 'Coba ejaan lain atau artis, lagu, maupun playlist yang berbeda.', { ic: 'i-search' });
 }
 function relatedSectionsHTML(sections) {
   return (sections || []).map((sec) => {
@@ -1558,20 +1558,20 @@ function relatedSectionsHTML(sections) {
     if (!items.length) return '';
     const allSongs = items.every((i) => i.videoId && !isSearchCard(i));
     if (allSongs) {
-      return `<div class="shelf"><div class="shelf-title">${esc(sec.title || 'Songs')}</div>
+      return `<div class="shelf"><div class="shelf-title">${esc(sec.title || 'Lagu')}</div>
         <div class="track-list">${items.slice(0, 16).map((i) => trackRowHTML(i)).join('')}</div></div>`;
     }
-    return `<div class="shelf"><div class="shelf-title">${esc(sec.title || 'More')}</div>${carouselHTML(items.map(cardHTML).join(''))}</div>`;
+    return `<div class="shelf"><div class="shelf-title">${esc(sec.title || 'Lagi')}</div>${carouselHTML(items.map(cardHTML).join(''))}</div>`;
   }).join('');
 }
 function recentSearchHTML() {
   const rec = store.get('srec', []).filter(Boolean).slice(0, 8);
   if (!rec.length) return '';
-  return `<div class="shelf-title recent-head"><span>Recent searches</span>
-    <button type="button" class="q-clear" id="srec-clear">Clear</button></div>
+  return `<div class="shelf-title recent-head"><span>Pencarian terbaru</span>
+    <button type="button" class="q-clear" id="srec-clear">Bersihkan</button></div>
     <div class="recent-row">${rec.map((qq) => `<span class="recent-chip">
       <button type="button" class="recent-go" data-q="${esc(qq)}">${icon('i-clock')}<span>${esc(qq)}</span></button>
-      <button type="button" class="recent-x" data-rm="${esc(qq)}" title="Remove">${icon('i-x')}</button>
+      <button type="button" class="recent-x" data-rm="${esc(qq)}" title="Hapus">${icon('i-x')}</button>
     </span>`).join('')}</div>`;
 }
 function bindSearchChrome(view, q, filter) {
