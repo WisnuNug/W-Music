@@ -1638,12 +1638,12 @@ async function viewSearch(view, q = '', filter = null) {
   const filters = ['all', 'songs', 'videos', 'albums', 'artists', 'playlists'];
   const hist = !q ? Library.history.slice(0, 6) : [];
   view.innerHTML = `
-    ${q ? '' : '<div class="page-title">Search</div>'}
+    ${q ? '' : '<div class="page-title">Pencarian</div>'}
     <div class="search-bar${q ? ' has-q' : ''}">${icon('i-search', 'ic search-ic')}<input id="search-input" placeholder="Kamu ingin memainkan musik apa?" value="${esc(q)}" autocomplete="off" spellcheck="false"><button type="button" class="search-clear" id="search-clear" title="Clear">${icon('i-x')}</button></div>
     <div class="suggest" id="suggest"></div>
     ${q ? `<div class="search-chips">${filters.map((f) => `<button type="button" class="chip ${((filter || 'all') === f) ? 'active' : ''}" data-f="${f}">${f[0].toUpperCase() + f.slice(1)}</button>`).join('')}</div>` : recentSearchHTML()}
     <div id="search-results">${q
-      ? '<div class="loading-note">Searching…</div>'
+      ? '<div class="loading-note">Mencari…</div>'
       : `${hist.length ? `<div class="shelf"><div class="shelf-title">Recently played</div><div class="track-list">${hist.map((s) => trackRowHTML({ ...s, subtitle: s.artist })).join('')}</div></div>` : ''}<div id="browse-all"><div class="shelf-title">Browse all</div><div class="mood-grid" id="browse-grid"><div class="loading-note">Loading…</div></div></div>`}</div>`;
   bindSearchChrome(view, q, filter);
   if (!q) bindItems($('#search-results'));
